@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arquivo Zip</title>
+   
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script> 
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script> 
+</head>
+<body>
+    <input type="file" id="files" multiple required>
+    <button onclick="download()">Compressão e Download Zip</button>
+     
+</body>
+<script>
+    function download(){
+        let zip = new JSZip()
+
+        let files = document.getElementById('files')
+
+        console.log(files.files)
+
+        Array.from(files.files).forEach((f,i) => {
+            zip.file(f.name,f)
+        })
+
+        zip.generateAsync({type:'Blob'})
+        .then((content) => {
+            saveAs(content,"output.zip")
+        })
+    }
+</script>
+</html>
